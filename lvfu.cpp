@@ -11,7 +11,13 @@ using json = nlohmann::json;
 
 // Function to print version information
 void printVersion() {
-    std::cout << "LunaVPN fu v1.0.0\nUsing JSON for Modern C++ __VERSION__" << std::endl;
+    std::cout << "###################################################\n";
+    std::cout << "#              LunaVPN fu v1.0.0                   #\n";
+    std::cout << "###################################################\n\n";
+    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n\n";
+    std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
+    std::cout << "LunaVPN fu v1.0.0\n";
+    std::cout << "Using JSON for Modern C++ __VERSION__\n\n";
 }
 
 int main(int argc, char *argv[]) {
