@@ -19,7 +19,7 @@ void printVersion() {
     std::cout << "LunaVPN fu v1.0.0\n";
     std::cout << "Using JSON for Modern C++ __VERSION__\n\n";
     std::cout << "Usage: LunaVPN_fu [-v] [<path_to_output.json>]\n\n";
-    std::cout << "-v               Display version information\n";
+    std::cout << "-v                      Display version information\n";
     std::cout << "<path_to_output.json>   Specify the output path for the JSON file (full path)\n\n";
 }
 
