@@ -19,6 +19,15 @@ void printVersion() {
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
     std::cout << "LunaVPN fu v1.1.0\n";
     std::cout << "Using JSON for Modern C++ ___VERSION___\n\n";
+}
+
+// Function to print help information
+void printHelp() {
+        std::cout << "###################################################\n";
+    std::cout << "#              LunaVPN fu v1.1.0                  #\n";
+    std::cout << "###################################################\n\n";
+    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
+    std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
     std::cout << "Usage: LunaVPN_fu [-v] | [-gen] | [-u <URL> -h <HEADER>] | [<path_to_output.json>]\n\n";
     std::cout << "-v                      Display version information\n";
     std::cout << "-gen                    Generate the JSON file\n";
@@ -143,7 +152,13 @@ void sendHttpPostRequest(const std::string& url, const std::string& header, cons
 
 int main(int argc, char *argv[]) {
     // Check for version flag
-    if (argc == 2 && std::string(argv[1]) == "-v") {
+    if ((argc == 2 && (std::string(argv[1]) == "-v" || std::string(argv[1]) == "--version"))) {
+        printVersion();
+        return 0;
+    }
+
+    // Check for help flag
+    if ((argc == 2 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help"))) {
         printVersion();
         return 0;
     }
