@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
 
     // Check for help flag
     if ((argc == 2 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help"))) {
-        printVersion();
+        printHelp();
         return 0;
     }
 
