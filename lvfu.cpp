@@ -4,7 +4,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <iomanip>  // Added for std::setw
+#include <iomanip>
+#include <curl/curl.h>
 #include "./nlohmann/json/json.hpp"
 
 using json = nlohmann::json;
@@ -12,45 +13,33 @@ using json = nlohmann::json;
 // Function to print version information
 void printVersion() {
     std::cout << "###################################################\n";
-    std::cout << "#              LunaVPN fu v1.0.0                  #\n";
+    std::cout << "#              LunaVPN fu v1.1.0                  #\n";
     std::cout << "###################################################\n\n";
     std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
-    std::cout << "LunaVPN fu v1.0.0\n";
-    std::cout << "Using JSON for Modern C++ __VERSION__\n\n";
-    std::cout << "Usage: LunaVPN_fu [-v] [<path_to_output.json>]\n\n";
+    std::cout << "LunaVPN fu v1.1.0\n";
+    std::cout << "Using JSON for Modern C++ ___VERSION___\n\n";
+    std::cout << "Usage: LunaVPN_fu [-v] | [-gen] | [-u <URL> -h <HEADER>] | [<path_to_output.json>]\n\n";
     std::cout << "-v                      Display version information\n";
+    std::cout << "-gen                    Generate the JSON file\n";
+    std::cout << "-u <URL> -h <HEADER>    Send JSON data as HTTP POST request\n";
     std::cout << "<path_to_output.json>   Specify the output path for the JSON file (full path)\n\n";
 }
 
-
-int main(int argc, char *argv[]) {
-    // Check for version flag
-    if (argc == 2 && std::string(argv[1]) == "-v") {
-        printVersion();
-        return 0;
-    }
-
-    // Default file path
-    std::string filePath = "data.json";
-
-    // Check if a filepath is provided as a command-line argument
-    if (argc > 1) {
-        filePath = argv[1];
-    }
-
+// Function to generate JSON
+void generateJson(const std::string& filePath) {
     // Get server name
     char hostname[256];
     if (gethostname(hostname, sizeof(hostname)) != 0) {
         std::cerr << "Error getting hostname." << std::endl;
-        return 1;
+        exit(1);
     }
 
     // Get public IP address
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
         std::cerr << "Error creating socket." << std::endl;
-        return 1;
+        exit(1);
     }
 
     struct sockaddr_in server;
@@ -61,7 +50,7 @@ int main(int argc, char *argv[]) {
     if (connect(sock, (struct sockaddr *)&server, sizeof(server)) != 0) {
         std::cerr << "Error connecting to socket." << std::endl;
         close(sock);
-        return 1;
+        exit(1);
     }
 
     struct sockaddr_in localAddress;
@@ -85,8 +74,127 @@ int main(int argc, char *argv[]) {
         std::cout << filePath << " created successfully." << std::endl;
     } else {
         std::cerr << "Error creating " << filePath << "." << std::endl;
-        return 1;
+        exit(1);
+    }
+}
+
+// Callback function for CURLOPT_WRITEFUNCTION
+size_t writeCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
+    size_t totalSize = size * nmemb;
+    output->append((char*)contents, totalSize);
+    return totalSize;
+}
+
+// Function to send HTTP POST request
+void sendHttpPostRequest(const std::string& url, const std::string& header, const std::string& filePath) {
+    // Initialize libcurl
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        std::cerr << "Error initializing libcurl." << std::endl;
+        exit(1);
     }
 
-    return 0;
+    // Set the target URL
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+
+    // Set the HTTP header
+    struct curl_slist* headers = NULL;
+    headers = curl_slist_append(headers, ("X-Luna-API: " + header).c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+    // Set the POST data
+    std::ifstream inFile(filePath);
+    std::string postData;
+    if (inFile.is_open()) {
+        inFile.seekg(0, std::ios::end);
+        postData.reserve(inFile.tellg());
+        inFile.seekg(0, std::ios::beg);
+        postData.assign((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+        inFile.close();
+    } else {
+        std::cerr << "Error reading " << filePath << "." << std::endl;
+        curl_easy_cleanup(curl);
+        exit(1);
+    }
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
+
+    // Set the write callback function to capture the response
+    std::string responseData;
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseData);
+
+    // Perform the HTTP request
+    CURLcode res = curl_easy_perform(curl);
+    if (res != CURLE_OK) {
+        std::cerr << "Error performing HTTP request: " << curl_easy_strerror(res) << std::endl;
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+        exit(1);
+    }
+
+    // Clean up
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+
+    // Display the response data
+    std::cout << "HTTP POST request sent to " << url << " with header " << header << std::endl;
+    std::cout << "Response: " << responseData << std::endl;
+}
+
+int main(int argc, char *argv[]) {
+    // Check for version flag
+    if (argc == 2 && std::string(argv[1]) == "-v") {
+        printVersion();
+        return 0;
+    }
+
+    // Check for generate JSON flag
+    if (argc == 2 && std::string(argv[1]) == "-gen") {
+        // Default file path
+        std::string filePath = "data.json";
+
+        // Check if a filepath is provided as a command-line argument
+        if (argc > 2) {
+            filePath = argv[2];
+        }
+
+        // Generate JSON
+        generateJson(filePath);
+
+        return 0;
+    }
+
+    // Check for HTTP POST request flag
+    if (argc == 5 && std::string(argv[1]) == "-u" && std::string(argv[3]) == "-h") {
+        std::string url = argv[2];
+        std::string header = argv[4];
+
+        // Default file path
+        std::string filePath = "data.json";
+
+        // Check if a filepath is provided as a command-line argument
+        if (argc > 5) {
+            filePath = argv[5];
+        }
+
+        // Read JSON from file
+        std::ifstream inFile(filePath);
+        json jsonData;
+        if (inFile.is_open()) {
+            inFile >> jsonData;
+            inFile.close();
+
+            // Send HTTP POST request
+            sendHttpPostRequest(url, header, filePath);
+        } else {
+            std::cerr << "Error reading " << filePath << "." << std::endl;
+            exit(1);
+        }
+
+        return 0;
+    }
+
+    // Invalid command-line arguments
+    std::cerr << "Invalid command-line arguments. Use '-v' for version, '-gen' for JSON generation, or '-u <URL> -h <HEADER>' for HTTP POST request." << std::endl;
+    exit(1);
 }
