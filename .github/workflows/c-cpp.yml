@@ -19,3 +19,9 @@ jobs:
 
     - name: Make
       run: ./build.sh
+
+    - name: Print version
+      run: ./out/lvfu -v
+
+    - name: Print help
+      run: ./out/lvfu --help
