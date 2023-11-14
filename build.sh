@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 url="https://github.com/nlohmann/json/releases/latest"
 latest_tag=$(curl -sSL "$url" | grep -o 'tag/v[0-9][^"]*' | cut -d'/' -f2 | head -n1)
 
@@ -31,11 +32,12 @@ if [ -n "$latest_tag" ]; then
 
     # Update JSON for Modern C++ version number
     file_path="lvfu.cpp"
+    temp_file="lvfu_temp.cpp"
 
     # Check if the file exists
     if [ -e "$file_path" ]; then
-        # Use sed to perform the replacement
-        sed -i "s/__VERSION__/$latest_tag/g" "$file_path"
+        # Use sed to perform the replacement, using a temporary file
+        sed "s/__VERSION__/${latest_tag//\//\\/}/g" "$file_path" > "$temp_file" && mv "$temp_file" "$file_path"
         echo "Replacement completed successfully in $file_path"
     else
         echo "File $file_path not found."
