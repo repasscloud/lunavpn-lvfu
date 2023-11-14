@@ -2,3 +2,4 @@
 out/
 nlohmann/
 data.json
+.DS_Store
