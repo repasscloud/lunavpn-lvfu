@@ -14,7 +14,7 @@ void printVersion() {
     std::cout << "###################################################\n";
     std::cout << "#              LunaVPN fu v1.0.0                  #\n";
     std::cout << "###################################################\n\n";
-    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n\n";
+    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
     std::cout << "LunaVPN fu v1.0.0\n";
     std::cout << "Using JSON for Modern C++ __VERSION__\n\n";
