@@ -3,3 +3,5 @@ out/
 nlohmann/
 data.json
 .DS_Store
+server_type
+server.uuid
