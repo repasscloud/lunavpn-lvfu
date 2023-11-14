@@ -9,7 +9,7 @@ all: $(TARGET)
 
 $(TARGET): $(SRC)
 	mkdir -p $(TARGET_DIR)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) -I$(NLOHMANN_PATH) $(SRC)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) -I$(NLOHMANN_PATH) $(SRC) -lcurl
 
 clean:
 	rm -rf $(TARGET_DIR)
