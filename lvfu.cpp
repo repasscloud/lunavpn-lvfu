@@ -1,11 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <iomanip>
 #include <curl/curl.h>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 #include "./nlohmann/json/json.hpp"
 
 using json = nlohmann::json;
@@ -35,7 +35,7 @@ void printHelp() {
     std::cout << "<path_to_output.json>   Specify the output path for the JSON file (full path)\n\n";
 }
 
-// Function to generate JSON
+// Function to generate json
 void generateJson(const std::string& filePath) {
     // Get server name
     char hostname[256];
@@ -70,10 +70,28 @@ void generateJson(const std::string& filePath) {
 
     close(sock);
 
+    // Read server.uuid file
+    std::ifstream uuidFile("/app/html/server.uuid");
+    std::string serverUid;
+    if (uuidFile.is_open()) {
+        getline(uuidFile, serverUid);
+        uuidFile.close();
+    }
+
+    // Read server_type file
+    std::ifstream serverTypeFile("/app/scripts/server_type");
+    std::string serverType;
+    if (serverTypeFile.is_open()) {
+        getline(serverTypeFile, serverType);
+        serverTypeFile.close();
+    }
+
     // Create JSON object
     json jsonData;
     jsonData["servername"] = hostname;
     jsonData["publicip"] = publicIP;
+    jsonData["serveruid"] = serverUid;
+    jsonData["servertype"] = serverType;
 
     // Write JSON to file
     std::ofstream outFile(filePath);
