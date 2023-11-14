@@ -48,6 +48,7 @@ if [ -n "$latest_tag" ]; then
     make
 
     ./out/lvfu -v
+    ./out/lvfu --help
 else
     echo "Unable to retrieve the latest tag."
 fi
