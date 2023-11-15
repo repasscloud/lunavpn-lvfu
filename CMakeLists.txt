@@ -19,8 +19,10 @@ target_link_libraries(lvpnfu ${CURL_LIBRARIES})
 # Create the output directory
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
-# Specify the output directory for the binary during build
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
+# Set the output directory for the executable
+set_target_properties(lvpnfu PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out
+)
 
 # Optionally, you can add more specific include directories if needed
 # include_directories(jsondata/nlohmann)
