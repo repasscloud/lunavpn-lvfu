@@ -19,9 +19,29 @@ target_link_libraries(lvpnfu ${CURL_LIBRARIES})
 # Specify the output directory for the binary during build
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
-# Specify the installation directory for the executable
-# This sets the installation path to ./out when you run 'make install'
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/out)
+# Optionally, you can add more specific include directories if needed
+# include_directories(jsondata/nlohmann)
 
-# Specify the installation target
-install(TARGETS lvpnfu DESTINATION .)
+# Other configurations...
+
+# Specify the output directory for the binary
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
+
+# Add a custom target for cleaning up build artifacts
+add_custom_target(clean-all
+    COMMAND ${CMAKE_BUILD_TOOL} clean
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/clean-all.cmake
+)
+
+# Create a clean-all.cmake script
+file(WRITE ${CMAKE_BINARY_DIR}/cmake/clean-all.cmake
+    "FILE(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/out)\n"
+    "FILE(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/CMakeFiles)\n"
+    "FILE(REMOVE ${CMAKE_BINARY_DIR}/CMakeCache.txt)\n"
+    "FILE(REMOVE ${CMAKE_BINARY_DIR}/Makefile)\n"
+)
+
+# Add clean-all as a dependency of clean if clean exists
+if(TARGET clean)
+    add_dependencies(clean clean-all)
+endif()
