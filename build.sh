@@ -24,7 +24,7 @@ if [ -n "$latest_tag" ]; then
     curl -LO "$release_url"
 
     # Create folder structure and move the file
-    folder_path="nlohmann/json"
+    folder_path="jsondata/nlohmann"
     mkdir -p "$folder_path"
     mv "json.hpp" "$folder_path/"
     
@@ -37,13 +37,13 @@ if [ -n "$latest_tag" ]; then
     # Check if the file exists
     if [ -e "$file_path" ]; then
         # Use sed to perform the replacement, using a temporary file
-        sed "s/___VERSION___/${latest_tag//\//\\/}/g" "$file_path" > "$temp_file" && mv "$temp_file" "$file_path"
+        sed "s/___NLOHMANN_VERSION___/${latest_tag//\//\\/}/g" "$file_path" > "$temp_file" && mv "$temp_file" "$file_path"
         echo "Replacement completed successfully in $file_path"
     else
         echo "File $file_path not found."
     fi
 
-    make clean
+    cmake .
 
     make
 else
