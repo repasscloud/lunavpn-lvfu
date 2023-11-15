@@ -23,11 +23,17 @@ jobs:
     - name: Install libcurl
       run: sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
 
+    - name: Execute prework
+      run: ./prework.sh
+
+    - name: CMake
+      run: cmake .
+
     - name: Make
-      run: ./build.sh
+      run: make
 
     - name: Print version
-      run: ./out/lvfu -v
+      run: ./out/lvpnfu -v
 
     - name: Print help
-      run: ./out/lvfu --help
+      run: ./out/lvpnfu -h
