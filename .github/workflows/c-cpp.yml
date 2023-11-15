@@ -32,11 +32,11 @@ jobs:
     - name: Make
       run: make
 
-    - name: Print version
-      run: ./out/lvpnfu -v
-
-    - name: Print help
-      run: ./out/lvpnfu -h
+    - name: Archive executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: lvpnfu-artifact
+        path: ./out/lvpnfu
 
   release:
     needs: build
@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Read version_info
         id: version
@@ -53,6 +53,12 @@ jobs:
           echo "Version Info: $VERSION_INFO"
           echo "::set-output name=version::$VERSION_INFO"
 
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: lvpnfu-artifact
+          path: ./out
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -60,3 +66,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ steps.version.outputs.version }}
           tag_name: v${{ steps.version.outputs.version }}
+          files: ./out/lvpnfu
