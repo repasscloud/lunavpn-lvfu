@@ -18,7 +18,7 @@ void printVersion() {
     std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
     std::cout << "LunaVPN fu v1.1.0\n";
-    std::cout << "Using JSON for Modern C++ ___VERSION___\n\n";
+    std::cout << "Using JSON for Modern C++ v3.11.2\n\n";
 }
 
 // Function to print help information
