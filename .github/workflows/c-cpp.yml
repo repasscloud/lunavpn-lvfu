@@ -44,9 +44,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Read version_info
+        id: version
         run: |
           VERSION_INFO=$(cat version_info)
           echo "Version Info: $VERSION_INFO"
@@ -57,5 +58,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release_name: Release ${{ steps.release.outputs.version }}
-          tag_name: v${{ steps.release.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
