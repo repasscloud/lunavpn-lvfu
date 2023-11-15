@@ -40,5 +40,7 @@ file(WRITE ${CMAKE_BINARY_DIR}/cmake/clean-all.cmake
     "FILE(REMOVE ${CMAKE_BINARY_DIR}/Makefile)\n"
 )
 
-# Add clean-all as a dependency of clean
-add_dependencies(clean clean-all)
+# Add clean-all as a dependency of clean if clean exists
+if(TARGET clean)
+    add_dependencies(clean clean-all)
+endif()
