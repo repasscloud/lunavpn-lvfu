@@ -4,7 +4,7 @@
 // Function to print help info
 void printHelp() {
     std::cout << "###################################################\n";
-    std::cout << "#              LunaVPN fu v1.1.0                  #\n";
+    std::cout << "#              LunaVPN fu vX.X.X                  #\n";
     std::cout << "###################################################\n\n";
     std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
@@ -23,7 +23,7 @@ void printHelp() {
 // Function to print version information
 void printVersion() {
     std::cout << "###################################################\n";
-    std::cout << "#              LunaVPN fu v1.1.0                  #\n";
+    std::cout << "#              LunaVPN fu vX.X.X                  #\n";
     std::cout << "###################################################\n\n";
     std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";

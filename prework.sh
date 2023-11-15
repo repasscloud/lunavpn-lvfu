@@ -43,6 +43,12 @@ if [ -n "$latest_tag" ]; then
         echo "File $file_path not found."
     fi
 
+    # Read version_info file
+    VERSION_INFO=$(cat version_info)
+
+    # Search and replace in files
+    find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
+
     cmake .
 
     make
