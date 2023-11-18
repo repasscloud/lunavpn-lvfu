@@ -3,6 +3,10 @@
 # openssl_url="https://api.github.com/repos/openssl/openssl/releases/latest"
 # openssl_latest_tag=$(curl -sSL "$openssl_url" | jq -r '.tag_name' | grep -o 'openssl-[0-9][^"]*')
 
+# lvpnfu_url="https://api.github.com/repos/repasscloud/lunavpn-lvfu/releases/latest"
+# lvpnfu_latest_tag=$(curl -sSL "$lvpnfu_url" | grep -o 'tag/v[0-9][^"]*' | cut -d'/' -f2 | head -n1)
+# curl -o ./out/lvpnfu https://github.com/repasscloud/lunavpn-lvfu/releases/download/$lvpnfu_latest_tag/lvpnfu
+
 json_url="https://github.com/nlohmann/json/releases/latest"
 json_latest_tag=$(curl -sSL "$json_url" | grep -o 'tag/v[0-9][^"]*' | cut -d'/' -f2 | head -n1)
 
