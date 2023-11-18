@@ -65,5 +65,6 @@ find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
 # Add base64 library
 rm -rf cpp-base64
 git clone https://github.com/ReneNyffenegger/cpp-base64.git
+docker run --rm -v $(pwd)/cpp-base64:/cpp-base64 -w /cpp-base64 ubuntu bash -c "apt-get update && apt-get install -y g++ make && make base64-17.o"
 cp cpp-base64/base64.cpp jsondata/
 cp cpp-base64/base64.h jsondata/
