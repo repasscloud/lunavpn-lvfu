@@ -60,7 +60,7 @@ VERSION_INFO=$(cat version_info)
 echo $VERSION_INFO
 
 # Search and replace in files
-find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
+find . -type f -name '*.cpp' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
 
 # Add base64 library
 git clone https://github.com/ReneNyffenegger/cpp-base64.git
