@@ -6,7 +6,7 @@ void printHelp() {
     std::cout << "###################################################\n";
     std::cout << "#              LunaVPN fu vX.X.X                  #\n";
     std::cout << "###################################################\n\n";
-    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for networking needs!\n";
+    std::cout << "Welcome to LunaVPN fu - Your Functioning Unit for LunaVPN needs!\n";
     std::cout << "Copyright © RePass Cloud Pty Ltd 2023\n\n";
     std::cout << "Usage: LunaVPN_fu [-v] | [-h] | [-g <path_to_output.json>]\n\n";
     std::cout << "  -v|--version                                Display version information\n";
