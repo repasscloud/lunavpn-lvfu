@@ -1,0 +1,72 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install build essentials
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    - name: Install C++ development tools
+      run: sudo apt-get install -y g++ cmake
+      
+    - name: Install libcurl
+      run: sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
+
+    - name: Execute prework
+      run: ./prework.sh
+
+    - name: CMake
+      run: cmake .
+
+    - name: Make
+      run: make
+
+    - name: Print version info
+      run: ./out/lvpnfu --version
+
+    - name: Archive executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: lvpnfu-artifact
+        path: ./out/lvpnfu
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Read version_info
+        id: version
+        run: |
+          VERSION_INFO=$(cat version_info)
+          echo "Version Info: $VERSION_INFO"
+          echo "::set-output name=version::$VERSION_INFO"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: lvpnfu-artifact
+          path: ./out
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Release ${{ steps.version.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          files: ./out/lvpnfu
