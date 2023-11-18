@@ -143,7 +143,7 @@ void generateJson(const std::string& filePath) {
                     std::ifstream file(peerPngFile, std::ios::binary);
                     if (!file.is_open()) {
                         std::cerr << "Error opening file: " << peerPngFile << std::endl;
-                        return 1;
+                        exit(1);
                     }
 
                     // read the file content into a vector
@@ -162,7 +162,7 @@ void generateJson(const std::string& filePath) {
                     std::ifstream file2(peerConfFile);
                     if (!file2.is_open()) {
                         std::cerr << "Error opening file: " << peerConfFile << std::endl;
-                        return 1;
+                        exit(1);
                     }
 
                     // Read the file content into a string
