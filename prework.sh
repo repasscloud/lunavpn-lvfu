@@ -54,6 +54,10 @@ else
     echo "Unable to retrieve the latest tag for Nlohman JSON"
 fi
 
+git clone https://github.com/ReneNyffenegger/cpp-base64.git
+mv cpp-base64/base64.cpp jsondata/
+mv cpp-base64/base64.h jsondata/
+
 # Read version_info file
 VERSION_INFO=$(cat version_info)
 
