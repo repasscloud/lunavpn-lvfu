@@ -7,6 +7,7 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+#include <algorithm>
 
 // Function to check if the input string consists of alphanumeric characters only
 bool isSafeInput(const std::string& input) {
