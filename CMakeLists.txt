@@ -12,7 +12,8 @@ include_directories(jsondata)
 add_executable(lvpnfu main.cpp
                       jsondata/generateJsonFunctions.cpp
                       menu/menuFunctions.cpp
-                      http/apiFunctions.cpp)
+                      http/apiFunctions.cpp
+                      squid/squidFunctions.cpp)
 
 target_link_libraries(lvpnfu ${CURL_LIBRARIES})
 

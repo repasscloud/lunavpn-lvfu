@@ -1,6 +1,6 @@
-# LunaVPN fu
+# LunaVPN-fu
 
-Welcome to LunaVPN fu – where "fu" stands for "Functioning Unit"! Because in IT, we like things to function smoothly, just like a well-oiled code machine.
+Welcome to LunaVPN-fu – where "fu" stands for "Functioning Unit"! Because in IT, we like things to function smoothly, just like a well-oiled code machine.
 
 ## Build Instructions
 
@@ -12,7 +12,7 @@ To build the application, run the following command in your terminal:
 
 ## Functionality
 
-LunaVPN fu is your tool for creating a JSON file containing the server name and public IP address. It's designed to be a reliable "Functioning Unit" for your networking needs.
+LunaVPN-fu is your tool for creating a JSON file containing the server name and public IP address. It's designed to be a reliable "Functioning Unit" for your networking needs.
 
 ## Dependencies
 

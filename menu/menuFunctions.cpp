@@ -11,7 +11,8 @@ void printHelp() {
     std::cout << "Usage: LunaVPN_fu [-v] | [-h] | [-g <path_to_output.json>]\n\n";
     std::cout << "  -v|--version                                Display version information\n";
     std::cout << "  -h|--help                                   Display help\n";
-    std::cout << "  -g|--generate-json <path_to_output.json>    Generate the JSON file\n\n";
+    std::cout << "  -gj|--generate-json <path_to_output.json>   Generate the JSON file\n";
+    std::cout << "  -gs|--generate-squid <path_to_output.json>  Generate the Squid Proxy credentials\n\n";
     std::cout << "Usage: LunaVPN_fu [-u <URL> -h <HEADER> -d <path_to_input.json>]\n\n";
     std::cout << "HTTP POST request\n";
     std::cout << "  -u|--url <URL>                        Specify the URL for HTTP POST request\n";
