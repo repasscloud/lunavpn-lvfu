@@ -9,11 +9,15 @@ include_directories(${CURL_INCLUDE_DIR})
 
 include_directories(jsondata)
 
+# Add a custom library for base64-17.o
+add_library(base64_lib OBJECT cpp-base64/base64-17.o)
+
 add_executable(lvpnfu main.cpp
                       jsondata/generateJsonFunctions.cpp
                       menu/menuFunctions.cpp
                       http/apiFunctions.cpp
-                      squid/squidFunctions.cpp)
+                      squid/squidFunctions.cpp
+                      $<TARGET_OBJECTS:base64_lib>)  # Include the base64-17.o object file
 
 target_link_libraries(lvpnfu ${CURL_LIBRARIES})
 
