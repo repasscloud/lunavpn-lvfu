@@ -35,8 +35,8 @@ if [ -n "$json_latest_tag" ]; then
     echo "File 'json.hpp' moved to '$json_folder_path/'"
 
     # Update JSON for Modern C++ version number
-    json_file_path="main.cpp"
-    json_temp_file="main_temp.cpp"
+    json_file_path="menu/menuFunctions.cpp"
+    json_temp_file="menu/menuFunctions_temp.cpp"
 
     # Check if the file exists
     if [ -e "$json_file_path" ]; then
@@ -56,4 +56,4 @@ VERSION_INFO=$(cat version_info)
 echo $VERSION_INFO
 
 # Search and replace in files
-find . -type f -name 'main.cpp' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
+find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
