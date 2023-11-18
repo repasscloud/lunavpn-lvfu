@@ -63,6 +63,7 @@ echo $VERSION_INFO
 find . -type f -name '*.cpp' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
 
 # Add base64 library
+rm -rf cpp-base64
 git clone https://github.com/ReneNyffenegger/cpp-base64.git
 mv cpp-base64/base64.cpp jsondata/
 mv cpp-base64/base64.h jsondata/
