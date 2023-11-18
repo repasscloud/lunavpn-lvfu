@@ -65,5 +65,5 @@ find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
 # Add base64 library
 rm -rf cpp-base64
 git clone https://github.com/ReneNyffenegger/cpp-base64.git
-mv cpp-base64/base64.cpp jsondata/
-mv cpp-base64/base64.h jsondata/
+cp cpp-base64/base64.cpp jsondata/
+cp cpp-base64/base64.h jsondata/
