@@ -50,6 +50,20 @@ int main(int argc, char *argv[]) {
         // set filepath for output/input
         std::string filePath = valueArg;
 
+        std::string squidPath = filePath;
+
+        // Check if there is a trailing "/"
+        if (!squidPath.empty() && squidPath.back() == '/') {
+            // Remove the trailing "/"
+            squidPath.pop_back();
+        }
+
+        // set squid.creds path
+        std::string squidCredsPath = squidPath + "/squid.creds";
+
+        // set squid htpasswd
+        std::string htpasswdPath = squidPath + "/htpasswd";
+
         // generate switch
         if (currentArg == "-gj" || currentArg == "--generate-json") {
             // Generate JSON (or replace existing file)
@@ -58,20 +72,8 @@ int main(int argc, char *argv[]) {
             return 0;
         }
         else if (currentArg == "-gs" || currentArg == "--generate-squid") {
-            std::string squidPath = filePath;
-
-            // Check if there is a trailing "/"
-            if (!squidPath.empty() && squidPath.back() == '/') {
-                // Remove the trailing "/"
-                squidPath.pop_back();
-            }
-
-            // set squid.creds path
-            std::string squidCredsPath = squidPath + "/squid.creds";
-
-            // set squid htpasswd
-            std::string htpasswdPath = squidPath + "/htpasswd";
             
+
             // Seed the random number generator
             srand(static_cast<unsigned int>(time(0)));
 
@@ -100,11 +102,11 @@ int main(int argc, char *argv[]) {
             }
 
             // Write to the file without trailing newline
-            std::ofstream outFile(filePath, std::ios::out | std::ios::trunc);
+            std::ofstream outFile(squidCredsPath, std::ios::out | std::ios::trunc);
             if (outFile.is_open()) {
                 outFile << username << ":" << password;
                 outFile.close();
-                std::cout << "Credentials written to " << filePath << std::endl;
+                std::cout << "Credentials written to " << squidCredsPath << std::endl;
             } else {
                 std::cerr << "Error opening file for writing!" << std::endl;
                 return 1;
@@ -113,7 +115,7 @@ int main(int argc, char *argv[]) {
             return 0;
         }
         else {
-            std::cerr << "Invalid switch or filepath: " << filePath << "." << std::endl;
+            std::cerr << "Invalid switch or filepath: " << squidCredsPath << "." << std::endl;
             return 1;
         }
     }

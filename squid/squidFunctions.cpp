@@ -10,7 +10,9 @@
 
 // Function to check if the input string consists of alphanumeric characters only
 bool isSafeInput(const std::string& input) {
-    return std::all_of(input.begin(), input.end(), ::isalnum);
+    return std::all_of(input.begin(), input.end(), [](char c) {
+        return std::isalnum(c) || c == '-';
+    });
 }
 
 // Function to generate the dictionary

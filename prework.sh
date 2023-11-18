@@ -35,8 +35,8 @@ if [ -n "$json_latest_tag" ]; then
     echo "File 'json.hpp' moved to '$json_folder_path/'"
 
     # Update JSON for Modern C++ version number
-    json_file_path="lvfu.cpp"
-    json_temp_file="lvfu_temp.cpp"
+    json_file_path="main.cpp"
+    json_temp_file="main_temp.cpp"
 
     # Check if the file exists
     if [ -e "$json_file_path" ]; then
@@ -46,23 +46,6 @@ if [ -n "$json_latest_tag" ]; then
     else
         echo "File $json_file_path not found."
     fi
-else
-    echo "Unable to retrieve the latest tag for Nlohman JSON"
-fi
-
-# OpenSSL
-if [ -n "$openssl_latest_tag" ]; then
-
-    echo "OpenSSL Latest Tag: $openssl_latest_tag"
-
-    # # Check if the file exists
-    # if [ -e "$json_file_path" ]; then
-    #     # Use sed to perform the replacement, using a temporary file
-    #     sed "s/___NLOHMANN_VERSION___/${json_latest_tag//\//\\/}/g" "$json_file_path" > "$json_temp_file" && mv "$json_temp_file" "$json_file_path"
-    #     echo "Replacement completed successfully in $json_file_path"
-    # else
-    #     echo "File $json_file_path not found."
-    # fi
 else
     echo "Unable to retrieve the latest tag for Nlohman JSON"
 fi
