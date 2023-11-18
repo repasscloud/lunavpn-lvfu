@@ -32,38 +32,41 @@ jobs:
     - name: Make
       run: make
 
-    - name: Archive executable
-      uses: actions/upload-artifact@v2
-      with:
-        name: lvpnfu-artifact
-        path: ./out/lvpnfu
+    - name: Print version info
+      run: ./out/lvpnfu --version
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
+  #   - name: Archive executable
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: lvpnfu-artifact
+  #       path: ./out/lvpnfu
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # release:
+  #   needs: build
+  #   runs-on: ubuntu-latest
 
-      - name: Read version_info
-        id: version
-        run: |
-          VERSION_INFO=$(cat version_info)
-          echo "Version Info: $VERSION_INFO"
-          echo "::set-output name=version::$VERSION_INFO"
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: lvpnfu-artifact
-          path: ./out
+  #     - name: Read version_info
+  #       id: version
+  #       run: |
+  #         VERSION_INFO=$(cat version_info)
+  #         echo "Version Info: $VERSION_INFO"
+  #         echo "::set-output name=version::$VERSION_INFO"
 
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Release ${{ steps.version.outputs.version }}
-          tag_name: v${{ steps.version.outputs.version }}
-          files: ./out/lvpnfu
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: lvpnfu-artifact
+  #         path: ./out
+
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: softprops/action-gh-release@v1
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         name: Release ${{ steps.version.outputs.version }}
+  #         tag_name: v${{ steps.version.outputs.version }}
+  #         files: ./out/lvpnfu

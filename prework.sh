@@ -1,7 +1,7 @@
 #!/bin/bash
 
-openssl_url="https://api.github.com/repos/openssl/openssl/releases/latest"
-openssl_latest_tag=$(curl -sSL "$openssl_url" | jq -r '.tag_name' | grep -o 'openssl-[0-9][^"]*')
+# openssl_url="https://api.github.com/repos/openssl/openssl/releases/latest"
+# openssl_latest_tag=$(curl -sSL "$openssl_url" | jq -r '.tag_name' | grep -o 'openssl-[0-9][^"]*')
 
 json_url="https://github.com/nlohmann/json/releases/latest"
 json_latest_tag=$(curl -sSL "$json_url" | grep -o 'tag/v[0-9][^"]*' | cut -d'/' -f2 | head -n1)
@@ -53,9 +53,7 @@ fi
 # Read version_info file
 VERSION_INFO=$(cat version_info)
 
+echo $VERSION_INFO
+
 # Search and replace in files
-find . -type f -name '*' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
-
-cmake .
-
-make
+find . -type f -name 'main.cpp' -exec sed -i "s/vX.X.X/v${VERSION_INFO}/g" {} +
