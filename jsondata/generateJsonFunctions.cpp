@@ -10,10 +10,11 @@
 #include <sstream>
 #include "nlohmann/json.hpp"
 #include <vector>
-#include <Base64.hpp>
+#include <mtrp/base64.hpp>
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
+namespace b64 = mtrp;
 
 // Function to generate json
 void generateJson(const std::string& filePath) {
@@ -156,7 +157,9 @@ void generateJson(const std::string& filePath) {
                     file.close();
 
                     // Convert the vector to a base64 string
-                    std::string base64String = base64_encode(fileContent.data(), fileContent.size());
+                    //std::string base64String = base64_encode(fileContent.data(), fileContent.size());
+                    std::string base64String;
+                    b64::encode(fileContent.data(), fileContent.size(), base64String);
 
                     // Open the file
                     std::ifstream file2(peerConfFile);
