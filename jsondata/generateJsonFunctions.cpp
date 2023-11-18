@@ -10,7 +10,7 @@
 #include <sstream>
 #include "nlohmann/json.hpp"
 #include <vector>
-#include <base64.hpp>
+#include <Base64.hpp>
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
