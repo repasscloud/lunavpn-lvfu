@@ -14,7 +14,7 @@
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
-namespace b64 = mtrp;
+namespace b64 = mtrp::b64; // Accessing the base64 functions
 
 // Function to generate json
 void generateJson(const std::string& filePath) {
@@ -157,7 +157,6 @@ void generateJson(const std::string& filePath) {
                     file.close();
 
                     // Convert the vector to a base64 string
-                    //std::string base64String = base64_encode(fileContent.data(), fileContent.size());
                     std::string base64String;
                     b64::encode(fileContent.data(), fileContent.size(), base64String);
 
