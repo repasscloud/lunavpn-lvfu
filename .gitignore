@@ -10,3 +10,5 @@ cmake/
 CMakeFiles/
 CppBase64/
 base64/
+lvfucs/bin/
+lvfucs/obj/
