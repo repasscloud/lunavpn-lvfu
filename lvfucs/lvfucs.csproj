@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Core\" />
+    <None Remove="Helper\" />
+    <None Remove="Core\Utilities\" />
+    <None Remove="Core\Models\" />
+    <None Remove="Core\Utilities\SquidProxy\" />
+    <None Remove="Core\Utilities\Wireguard\" />
+    <None Remove="Core\Utilities\SquidWireguard\" />
+    <None Remove="Core\Utilities\Converter\" />
+    <None Remove="Core\Utilities\Producer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Helper\" />
+    <Folder Include="Core\Utilities\" />
+    <Folder Include="Core\Models\" />
+    <Folder Include="Core\Utilities\SquidProxy\" />
+    <Folder Include="Core\Utilities\Wireguard\" />
+    <Folder Include="Core\Utilities\SquidWireguard\" />
+    <Folder Include="Core\Utilities\Converter\" />
+    <Folder Include="Core\Utilities\Producer\" />
+  </ItemGroup>
+</Project>
